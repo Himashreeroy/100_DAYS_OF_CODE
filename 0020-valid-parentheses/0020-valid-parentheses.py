@@ -1,18 +1,20 @@
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
+class Solution:
+    def isValid(self, s: str) -> bool:
         stack = []
-        mapping = {")": "(", "}": "{", "]": "["}  # Mapping of closing to opening brackets
-        
+        mapping = {')': '(', '}': '{', ']': '['}
+
         for char in s:
             if char in mapping:
-                top_element = stack.pop() if stack else '#'  # Use '#' to handle empty stack
+                top_element = stack.pop() if stack else '#'
                 if mapping[char] != top_element:
                     return False
             else:
                 stack.append(char)
-        
-        return not stack  # If the stack is empty, all brackets were closed properly, so it's valid
+
+        return not stack  # If the stack is empty, it's valid; otherwise, it's not.
+
+# Example usage:
+solution = Solution()
+print(solution.isValid("()"))          # Output: True
+print(solution.isValid("()[]{}"))      # Output: True
+print(solution.isValid("(]"))          # Output: False
