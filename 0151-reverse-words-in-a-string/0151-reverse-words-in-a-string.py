@@ -1,12 +1,19 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
-        # Split the input string into words using space as the delimiter
-        words = s.split()
+        words = s.split()  # Split the input string into words
+        reversed_words = words[::-1]  # Reverse the order of words
+        result = ' '.join(reversed_words)  # Join the reversed words with a single space
+        return result
+if __name__ == "__main__":
+    obj = Solution()
+    s1 = "the sky is blue"
+    s2 = "  hello world  "
+    s3 = "a good   example"
 
-        # Reverse the order of the words
-        words = words[::-1]
+    result1 = obj.reverseWords(s1)
+    result2 = obj.reverseWords(s2)
+    result3 = obj.reverseWords(s3)
 
-        # Join the reversed words with a single space between them
-        reversed_s = ' '.join(words)
-
-        return reversed_s
+    print(result1)  # Output: "blue is sky the"
+    print(result2)  # Output: "world hello"
+    print(result3)  # Output: "example good a"
