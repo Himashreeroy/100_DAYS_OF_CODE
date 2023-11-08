@@ -1,33 +1,18 @@
-from typing import List
-
 class Solution:
-    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        def backtrack(nums, path, result):
-            if not nums:
-                result.append(path)
+    def permuteUnique(self, nums):
+        def backtrack(start):
+            if start == len(nums):
+                result.append(nums[:])
                 return
-            for i in range(len(nums)):
-                # Skip duplicates
-                if i > 0 and nums[i] == nums[i - 1]:
+            used = set()
+            for i in range(start, len(nums)):
+                if nums[i] in used:
                     continue
-                # Explore permutations with the current number removed from nums
-                backtrack(nums[:i] + nums[i + 1:], path + [nums[i]], result)
-        
-        # Sort the input array to handle duplicates efficiently
-        nums.sort()
+                used.add(nums[i])
+                nums[start], nums[i] = nums[i], nums[start]
+                backtrack(start + 1)
+                nums[start], nums[i] = nums[i], nums[start]
+
         result = []
-        backtrack(nums, [], result)
+        backtrack(0)
         return result
-
-# Example usage
-sol = Solution()
-nums1 = [1, 1, 2]
-nums2 = [1, 2, 3]
-
-print(sol.permuteUnique(nums1))
-# Output: [[1, 1, 2], [1, 2, 1], [2, 1, 1]]
-
-print(sol.permuteUnique(nums2))
-# Output: [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
-
-        
