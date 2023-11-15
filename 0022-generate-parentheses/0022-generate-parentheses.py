@@ -1,10 +1,8 @@
-class Solution(object):
-    def generateParenthesis(self, n):
-        """
-        :type n: int
-        :rtype: List[str]
-        """
-        def backtrack(s='', left=0, right=0):
+from typing import List
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        def backtrack(s, left, right):
             if len(s) == 2 * n:
                 result.append(s)
                 return
@@ -12,7 +10,7 @@ class Solution(object):
                 backtrack(s + '(', left + 1, right)
             if right < left:
                 backtrack(s + ')', left, right + 1)
-        
+
         result = []
-        backtrack()
+        backtrack('', 0, 0)
         return result
