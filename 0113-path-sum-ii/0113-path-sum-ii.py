@@ -1,36 +1,36 @@
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+from typing import List, Optional
 
-class Solution(object):
-    def pathSum(self, root, targetSum):
-        """
-        :type root: TreeNode
-        :type targetSum: int
-        :rtype: List[List[int]]
-        """
-        def dfs(node, targetSum, path, result):
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        def dfs(node, current_path, current_sum):
             if not node:
                 return
-            
-            # Add the current node's value to the path
-            path.append(node.val)
-            
-            # If it's a leaf node and its value equals the remaining targetSum, add the path to the result
-            if not node.left and not node.right and node.val == targetSum:
-                result.append(list(path))  # Add a copy of the path to the result
-            
-            # Recur for the left and right subtrees with updated targetSum and path
-            dfs(node.left, targetSum - node.val, path, result)
-            dfs(node.right, targetSum - node.val, path, result)
-            
-            # Backtrack: remove the current node's value from the path
-            path.pop()
-        
-        result = []  # List to store the result paths
-        dfs(root, targetSum, [], result)  # Start DFS from the root
-        
+
+            current_path.append(node.val)
+            current_sum += node.val
+
+            if not node.left and not node.right:  # Leaf node
+                if current_sum == targetSum:
+                    result.append(list(current_path))
+
+            dfs(node.left, current_path, current_sum)
+            dfs(node.right, current_path, current_sum)
+
+            # Backtrack: Remove the current node from the path
+            current_path.pop()
+
+        result = []
+        dfs(root, [], 0)
         return result
+
+# Example usage:
+# root = TreeNode(5, TreeNode(4, TreeNode(11, TreeNode(7), TreeNode(2))), TreeNode(8, TreeNode(13), TreeNode(4, TreeNode(5), TreeNode(1))))
+# solution = Solution()
+# print(solution.pathSum(root, 22))
